@@ -2,6 +2,10 @@ Based on the work already done by the author for recommending similar music, I t
 
 The results of the same are shown in the follwing images.
 
+![Output_1](https://github.com/VikramShenoy97/Music-Recommendation-Using-Deep-Learning/blob/master/Images/o1.jpg)
+![Output_1](https://github.com/VikramShenoy97/Music-Recommendation-Using-Deep-Learning/blob/master/Images/o2.jpg)
+![Output_1](https://github.com/VikramShenoy97/Music-Recommendation-Using-Deep-Learning/blob/master/Images/o3.jpg)
+![Output_1](https://github.com/VikramShenoy97/Music-Recommendation-Using-Deep-Learning/blob/master/Images/o4.jpg)
 
 
 

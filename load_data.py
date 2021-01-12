@@ -7,16 +7,10 @@ from slice_spectrogram import slice_spect
 from keras.utils import np_utils
 from sklearn.model_selection import train_test_split
 
-"""
-Converts images and labels into training and testing matrices.
-"""
-def load_dataset(verbose=0, mode=None, datasetSize=1.0):
-    create_spectrogram(verbose, mode)
-    slice_spect(verbose, mode)
 
-    # datasetSize is a float value which returns a fraction of the dataset.
-    # If set as 1.0 it returns the entire dataset.
-    # If set as 0.5 it returns half the dataset.
+def load_dataset(mode=None, datasetSize=1.0):
+    create_spectrogram(mode)
+    slice_spect(mode)
 
     if mode=="Train":
         genre = {
@@ -29,10 +23,7 @@ def load_dataset(verbose=0, mode=None, datasetSize=1.0):
         "Pop": 6,
         "Instrumental": 7
         }
-        if(verbose > 0):
-            print "Compiling Training and Testing Sets ..."
-        filenames = [os.path.join("Train_Sliced_Images", f) for f in os.listdir("Train_Sliced_Images")
-                       if f.endswith(".jpg")]
+        filenames = [os.path.join("Train_Sliced_Images", f) for f in os.listdir("Train_Sliced_Images") if f.endswith(".jpg")]
         images_all = [None]*(len(filenames))
         labels_all = [None]*(len(filenames))
         for f in filenames:
@@ -86,10 +77,7 @@ def load_dataset(verbose=0, mode=None, datasetSize=1.0):
         return train_x, train_y, test_x, test_y, n_classes, genre_new
 
     if mode=="Test":
-        if(verbose > 0):
-            print "Compiling Training and Testing Sets ..."
-        filenames = [os.path.join("Test_Sliced_Images", f) for f in os.listdir("Test_Sliced_Images")
-                       if f.endswith(".jpg")]
+        filenames = [os.path.join("Test_Sliced_Images", f) for f in os.listdir("Test_Sliced_Images") if f.endswith(".jpg")]
         images = []
         labels = []
         for f in filenames:

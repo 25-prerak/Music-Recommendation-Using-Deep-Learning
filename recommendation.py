@@ -4,23 +4,22 @@ from keras.models import Model, load_model
 from load_data import load_dataset
 import cv2
 
-# Load the trained model.
-loaded_model = load_model("Saved_Model/Model.h5")
+loaded_model = load_model("Saved_Model/Model(1).h5")
 loaded_model.set_weights(loaded_model.get_weights())
-# Discard the Softmax layer, Second last layer provides the latent feature
-# representation.
-matrix_size = loaded_model.layers[-2].output.shape[1]
-new_model = Model(loaded_model.inputs, loaded_model.layers[-2].output)
-print new_model.summary()
 
-images, labels = load_dataset(verbose=1, mode="Test")
+matrix_size = loaded_model.layers[-2].output.shape[1]
+print(matrix_size)
+new_model = Model(loaded_model.inputs, loaded_model.layers[-2].output)
+print(new_model.summary())
+
+images, labels = load_dataset(mode="Test")
 images = np.expand_dims(images, axis=3)
-# Normalize the image.
+
 images = images / 255.
-# Display list of available test songs.
-print np.unique(labels)
+
+print(np.unique(labels))
 # Enter a song name which will be an anchor song.
-recommend_wrt = raw_input("Enter Song name:\n")
+recommend_wrt = input("Enter Song name:\n")                   
 prediction_anchor = np.zeros((1, matrix_size))
 count = 0
 predictions_song = []
@@ -50,23 +49,21 @@ for i in range(0, len(labels)):
         prediction = new_model.predict(test_image)
         predictions_song[index] = predictions_song[index] + prediction
         counts[index] = counts[index] + 1
-# Count is used for averaging the latent feature vectors.
+
 prediction_anchor = prediction_anchor / count
 for i in range(len(predictions_song)):
     predictions_song[i] = predictions_song[i] / counts[i]
-    # Cosine Similarity - Computes a similarity score of all songs with respect
-    # to the anchor song.
+    # Cosine Similarity
     distance_array.append(np.sum(prediction_anchor * predictions_song[i]) / (np.sqrt(np.sum(prediction_anchor**2)) * np.sqrt(np.sum(predictions_song[i]**2))))
 
 distance_array = np.array(distance_array)
 recommendations = 0
 
-print "Recommendation is:"
+print("Recommendation is:")
 
-# Number of Recommendations is set to 2.
-while recommendations < 2:
+while recommendations < 7:
     index = np.argmax(distance_array)
     value = distance_array[index]
-    print "Song Name: " + predictions_label[index] + " with value = %f" % (value)
+    print("Song Name: " + predictions_label[index] + " with value = %f" % (value))
     distance_array[index] = -np.inf
     recommendations = recommendations + 1

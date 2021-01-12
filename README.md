@@ -1,4 +1,13 @@
-# Music Recommendation Using Deep Learning
+Based on the work already done by the author for recommending similar music, I tried to optimize the hyperparameters like changing the kernel sizes, using padding in different layers etc. 
+
+The results of the same are shown in the follwing images.
+
+
+
+
+
+
+# Music Recommendation Using Deep Learning (Work done by Vikram(Author))
 
 Music Recommendation using latent feature vectors obtained from a network trained on the Free Music Archive dataset.
 
